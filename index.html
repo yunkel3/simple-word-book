@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>シンプル単語帳</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header-content">
+            <button id="layoutToggleButton" class="icon-button" title="レイアウト変更">
+                <span class="material-icons">reorder</span>
+            </button>
+            <h1>シンプル単語帳</h1>
+            <button id="darkModeToggle" class="icon-button" title="ダークモード切り替え">
+                <span class="material-icons">brightness_4</span>
+            </button>
+        </div>
+        <div class="controls">
+            <button id="addCardBtn" class="control-icon-button" title="単語カード追加">
+                <span class="material-icons">add_box</span>
+                <span class="button-furigana">追加</span>
+            </button>
+            <button id="deleteModeBtn" class="control-icon-button" title="選択削除">
+                <span class="material-icons">delete</span>
+                <span class="button-furigana">削除</span>
+            </button>
+            <button id="bulkEditBtn" class="control-icon-button" title="一括編集">
+                <span class="material-icons">tune</span>
+                <span class="button-furigana">一括編集</span>
+            </button>
+            <button id="bulkToggleQaBtn" class="control-icon-button" title="一括切り替え">
+                <span class="material-icons">repeat</span>
+                <span class="button-furigana">一括切替</span>
+            </button>
+            <button id="randomBtn" class="control-icon-button" title="ランダム">
+                <span class="material-icons">shuffle</span>
+                <span class="button-furigana">ランダム</span>
+            </button>
+            <button id="modeToggleButton" class="control-icon-button" title="単語帳管理">
+                <span class="material-icons">folder_open</span>
+                <span class="button-furigana">単語帳</span>
+            </button>
+            <button id="toggleDisplayBtn" class="control-icon-button" title="全て表示">
+                <span class="material-icons" id="toggleDisplayIcon">select_all</span>
+                <span class="button-furigana" id="toggleDisplayFurigana">全て表示</span>
+            </button>
+        </div>
+        <div id="flashcards" class="flashcards-container">
+        </div>
+    </div>
+
+    <div id="addCardModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2>新しい単語カードを追加</h2>
+            <div id="qaPairsInputArea">
+                <div class="qa-pair-input">
+                    <textarea class="modal-question-input" placeholder="問題文を入力"></textarea>
+                    <textarea class="modal-answer-input" placeholder="答えを入力"></textarea>
+                    <button class="remove-qa-pair-btn">削除</button>
+                </div>
+            </div>
+            <button id="addQaPairBtn">問題と答えのセットを追加</button>
+            <button id="saveCardBtn">カードを保存</button>
+        </div>
+    </div>
+
+    <div id="bulkEditModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="bulkEditCloseButton">&times;</span>
+            <h2>単語カードを一括編集</h2>
+            <p>「問題　答え　1（チェックオン）」</p>
+            <p>改行で複数セット登録　空行でカード登録</p>
+            <textarea id="bulkEditInput" placeholder="例:&#10;あした 明日&#10;あさって 明後日 1&#10;&#10;Apple りんご&#10;Orange オレンジ"></textarea>
+            <button id="saveBulkEditBtn">編集を保存</button>
+        </div>
+    </div>
+
+    <div id="vocabularySwitcherModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button" id="switcherCloseButton">&times;</span>
+            <h2>単語帳の管理</h2>
+            <div id="vocabularyList">
+            </div>
+            <div class="vocabulary-actions">
+                <input type="text" id="newVocabularyName" placeholder="新しい単語帳名">
+                <button id="addVocabularyBtn">新しい単語帳を追加</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

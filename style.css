@@ -1,0 +1,932 @@
+body {
+    font-family: 'Arial', sans-serif;
+    background-color: #f4f4f4;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    transition: background-color 0.3s ease, color 0.3s ease; /* ダークモードの切り替えを滑らかに */
+}
+
+/* ダークモードのスタイル */
+body.dark-mode {
+    background-color: #1a1a1a;
+    color: #e0e0e0;
+}
+
+.container {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 1200px;
+    box-sizing: border-box;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease; /* ダークモードの切り替えを滑らかに */
+}
+
+/* ダークモード時のコンテナ */
+.container.dark-mode {
+    background-color: #2c2c2c;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between; /* 要素を両端に配置 */
+    margin-bottom: 30px;
+}
+
+h1 {
+    text-align: center;
+    color: #333;
+    /* margin: 0; /* h1のマージンをリセットしてflexboxで制御 */ /* この行を削除 */
+    /* flex-grow: 1; /* 残りのスペースをh1が占めるようにする */ /* この行を削除 */
+    transition: color 0.3s ease; /* ダークモードの切り替えを滑らかに */
+}
+
+/* ダークモード時のh1 */
+.dark-mode h1 {
+    color: #e0e0e0;
+}
+
+/* アイコンボタンの共通スタイル */
+.icon-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 24px; /* アイコンのサイズ */
+    color: #333; /* アイコンの色 */
+    width: 48px; /* ボタンの幅を固定 */
+    height: 48px; /* ボタンの高さを固定 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%; /* 丸い形にする */
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+.icon-button:hover {
+    background-color: #e0e0e0; /* ホバー時の背景色 */
+}
+
+.icon-button .material-icons {
+    font-size: 24px; /* Material Iconsのサイズを明示的に指定 */
+}
+
+/* ダークモード時のアイコンボタン */
+.dark-mode .icon-button {
+    color: #e0e0e0;
+}
+
+.dark-mode .icon-button:hover {
+    background-color: #444;
+}
+
+/* レイアウトボタンのスタイル - header-content内のicon-button用 */
+/* ダークモード切り替えボタンと同様の色の振る舞いに変更 */
+#layoutToggleButton.icon-button {
+    background-color: transparent; /* 背景色を透明に */
+    color: #333; /* デフォルトのアイコン色 */
+    width: 48px; /* サイズはicon-buttonのデフォルトを維持 */
+    height: 48px;
+    font-size: 24px;
+}
+
+#layoutToggleButton.icon-button:hover {
+    background-color: #e0e0e0; /* ホバー時の背景色 */
+}
+
+/* ダークモード時のレイアウトボタン */
+.dark-mode #layoutToggleButton.icon-button {
+    background-color: transparent;
+    color: #e0e0e0;
+}
+.dark-mode #layoutToggleButton.icon-button:hover {
+    background-color: #444;
+}
+
+
+.controls {
+    /* flexboxからgridへ変更し、中央寄せと2列レイアウトを実現 */
+    display: flex; /* Flexboxに変更 */
+    flex-wrap: wrap; /* 必要に応じて折り返す */
+    justify-content: center; /* 中央寄せ */
+    gap: 8px; /* ボタン間のスペースを小さく */
+    margin-bottom: 25px;
+    max-width: 600px; /* 例えば、6つのボタンが横並びになるように調整 */
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.control-icon-button {
+    display: flex;
+    flex-direction: column; /* アイコンとテキストを縦に並べる */
+    align-items: center; /* 中央揃え */
+    justify-content: center;
+    width: 40px; /* ボタンの幅をさらに小さく */
+    height: 40px; /* ボタンの高さを調整 */
+    padding: 0; /* パディングを削除 */
+    border: none;
+    border-radius: 50%; /* 丸い形に */
+    cursor: pointer;
+    font-size: 16px; /* アイコンのサイズと合わせる */
+    transition: background-color 0.3s ease, transform 0.1s ease;
+    box-sizing: border-box; /* パディングとボーダーを幅に含める */
+    text-align: center;
+    flex-shrink: 0; /* ボタンが縮まないようにする */
+    position: relative; /* furiganaの位置調整のため */
+}
+
+.control-icon-button .material-icons {
+    font-size: 16px; /* アイコンのサイズを統一 */
+    margin-bottom: 0; /* アイコンとふりがなの間のスペースを削除 */
+    color: #333; /* アイコンの色をデフォルトで濃い色に */
+    position: absolute; /* アイコンを中央に */
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.control-icon-button .button-furigana {
+    font-size: 0.5em; /* ふりがなをさらに小さく */
+    color: #333; /* ふりがなの色をデフォルトで濃い色に */
+    white-space: nowrap; /* ふりがなが改行されないように */
+    position: absolute; /* ふりがなをボタンの下に配置 */
+    bottom: -12px; /* ボタンからの距離を調整 */
+    left: 50%;
+    transform: translateX(-50%);
+    width: max-content; /* テキストの幅に合わせて調整 */
+}
+
+/* ダークモード時のcontrol-icon-button内のアイコンとふりがな */
+.dark-mode .control-icon-button .material-icons,
+.dark-mode .control-icon-button .button-furigana {
+    color: #e0e0e0; /* ダークモードでは明るい色に */
+}
+
+/* 各ボタンの色 */
+#addCardBtn { background-color: #007bff; }
+#addCardBtn:hover { background-color: #0056b3; }
+
+#deleteModeBtn { background-color: #dc3545; }
+#deleteModeBtn:hover { background-color: #c82333; }
+#deleteModeBtn.cancel-button { background-color: #6c757d; }
+#deleteModeBtn.cancel-button:hover { background-color: #5a6268; }
+
+#bulkEditBtn { background-color: #6c757d; }
+#bulkEditBtn:hover { background-color: #5a6268; }
+
+#bulkToggleQaBtn { background-color: #ff8c00; }
+#bulkToggleQaBtn:hover { background-color: #cc7000; }
+
+#randomBtn { background-color: #28a745; }
+#randomBtn:hover { background-color: #218838; }
+
+/* 単語帳管理ボタンのスタイル - control-icon-button用 */
+#modeToggleButton.control-icon-button {
+    background-color: #17a2b8; /* レイアウトボタンの色 (水色っぽい色) を割り当てる */
+    /* color: white; /* アイコンとテキストの色を白に */ /* この行は下のルールで上書きされる */
+}
+#modeToggleButton.control-icon-button:hover {
+    background-color: #138496;
+}
+/* ダークモード時の単語帳管理ボタン */
+.dark-mode #modeToggleButton.control-icon-button {
+    background-color: #17a2b8;
+    /* color: #e0e0e0; */ /* この行は下のルールで上書きされる */
+}
+.dark-mode #modeToggleButton.control-icon-button:hover {
+    background-color: #138496;
+}
+/* 単語帳管理ボタンのアイコンとふりがなも白に */
+#modeToggleButton.control-icon-button .material-icons,
+#modeToggleButton.control-icon-button .button-furigana {
+    /* color: white; /* デフォルトで白色 */ /* この行を削除 */
+}
+.dark-mode #modeToggleButton.control-icon-button .material-icons,
+.dark-mode #modeToggleButton.control-icon-button .button-furigana {
+    color: #e0e0e0; /* ダークモードでは明るい色に */
+}
+
+
+/* レイアウトボタンのスタイルはheader-contentに移動したので、control-icon-buttonの定義は削除 */
+/* #layoutToggleButton { background-color: #17a2b8; } */
+/* #layoutToggleButton:hover { background-color: #138496; } */
+
+#toggleDisplayBtn { background-color: #ffc107; }
+#toggleDisplayBtn:hover { background-color: #e0a800; }
+/* #toggleDisplayBtnの色を考慮して、アイコンとふりがなも調整 */
+#toggleDisplayBtn .material-icons,
+#toggleDisplayBtn .button-furigana {
+    color: #333; /* 背景色に合わせて濃い色に */
+}
+/* ダークモード時の#toggleDisplayBtn */
+.dark-mode #toggleDisplayBtn {
+    background-color: #d4ac00; /* ダークモードでの黄色を少し暗く */
+}
+.dark-mode #toggleDisplayBtn:hover {
+    background-color: #b89500;
+}
+.dark-mode #toggleDisplayBtn .material-icons,
+.dark-mode #toggleDisplayBtn .button-furigana {
+    color: #e0e0e0; /* ダークモードでは明るい色に */
+}
+
+
+.flashcards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+    gap: 10px;
+}
+
+/* grid_viewレイアウト時のスタイル */
+.flashcards-container.grid-view-layout {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); /* 2列表示にするための調整 */
+    gap: 8px; /* カード間のギャップを小さく */
+}
+
+/* min-view-layout レイアウト時のスタイル (さらに小さいサイズ) */
+.flashcards-container.min-view-layout {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* さらに小さい3列表示 */
+    gap: 5px; /* カード間のギャップをさらに小さく */
+}
+
+
+.flashcard {
+    background-color: #f9f9f9;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 5px 20px 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    min-height: 180px;
+    height: 180px;
+    box-sizing: border-box;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.2s ease-in-out, background-color 0.3s ease; /* background-colorのtransitionを追加 */
+    z-index: 1; /* flashcardのz-indexを設定 */
+}
+
+/* grid_viewレイアウト時のカードのサイズ調整 */
+.flashcards-container.grid-view-layout .flashcard {
+    min-height: 120px; /* カードの高さを小さく */
+    height: 120px; /* カードの高さを小さく */
+    padding: 3px 10px 5px; /* パディングを小さく */
+}
+
+/* min-view-layout レイアウト時のカードのサイズ調整 */
+.flashcards-container.min-view-layout .flashcard {
+    min-height: 90px; /* さらにカードの高さを小さく */
+    height: 90px; /* さらにカードの高さを小さく */
+    padding: 2px 8px 4px; /* パディングをさらに小さく */
+}
+
+
+/* ダークモード時のフラッシュカード */
+.dark-mode .flashcard {
+    background-color: #3a3a3a;
+    border-color: #555;
+    color: #e0e0e0;
+}
+
+
+/* カードがめくられたときにカード全体の背景色を変える */
+.flashcard.flipped {
+    background-color: #e0f7fa; /* 薄い水色 */
+}
+
+/* ダークモード時、カードがめくられたとき */
+.dark-mode .flashcard.flipped {
+    background-color: #333333; /* 濃い黒に変更 */
+}
+
+.flashcard.selection-mode {
+    border: 2px solid #90EE90;
+}
+
+.flashcard.selected-for-deletion {
+    border: 2px solid #FF7F7F;
+}
+
+
+/* .flashcard.flipped .front は変更なし */
+.flashcard.flipped .front {
+    display: none;
+}
+
+/* .flashcard:not(.flipped) .back は変更なし */
+.flashcard:not(.flipped) .back {
+    display: none;
+}
+
+.flashcard-content {
+    cursor: pointer;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding-bottom: 25px;
+    padding-top: 5px;
+    overflow: hidden;
+}
+
+/* grid_viewレイアウト時のカードコンテンツのパディング調整 */
+.flashcards-container.grid-view-layout .flashcard-content {
+    padding-bottom: 18px; /* アクションボタンとの間隔を小さく */
+    padding-top: 3px;
+}
+
+/* min-view-layout レイアウト時のカードコンテンツのパディング調整 */
+.flashcards-container.min-view-layout .flashcard-content {
+    padding-bottom: 15px; /* さらにアクションボタンとの間隔を小さく */
+    padding-top: 2px;
+}
+
+/* カードの表面と裏面の基本スタイル */
+.flashcard-content .front,
+.flashcard-content .back {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    box-sizing: border-box; /* paddingをwidth/heightに含める */
+    background-color: inherit; /* 親の背景色を継承するように設定 */
+}
+
+
+.flashcard-content p {
+    margin: 0;
+    white-space: pre-wrap;
+    font-size: 2em; /* 初期サイズはそのまま、JavaScriptで調整 */
+    word-break: break-word;
+    overflow-wrap: break-word;
+    max-height: calc(100% - 0px);
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* grid_viewレイアウト時のフォントサイズ調整はJavaScriptに任せる */
+
+.flashcard-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 5px;
+    position: absolute;
+    bottom: 10px;
+    left: 10px;
+    right: 10px;
+}
+
+/* grid_viewレイアウト時のアクションボタン位置調整 */
+.flashcards-container.grid-view-layout .flashcard-actions {
+    bottom: 5px; /* ボタン位置を上へ */
+    left: 5px;
+    right: 5px;
+}
+
+/* min-view-layout レイアウト時のアクションボタン位置調整 */
+.flashcards-container.min-view-layout .flashcard-actions {
+    bottom: 3px; /* さらにボタン位置を上へ */
+    left: 3px;
+    right: 3px;
+}
+
+.flashcard-actions button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.9em;
+    transition: background-color 0.3s ease;
+}
+
+/* grid_viewレイアウト時のボタンサイズ調整 */
+.flashcards-container.grid-view-layout .flashcard-actions button {
+    padding: 5px 8px; /* パディングを小さく */
+    font-size: 0.7em; /* フォントサイズを小さく */
+}
+
+/* min-view-layout レイアウト時のボタンサイズ調整 */
+.flashcards-container.min-view-layout .flashcard-actions button {
+    padding: 3px 6px; /* さらにパディングを小さく */
+    font-size: 0.6em; /* さらにフォントサイズを小さく */
+}
+
+.flashcard-actions .edit-btn {
+    background-color: #17a2b8;
+    color: white;
+}
+
+.flashcard-actions .edit-btn:hover {
+    background-color: #138496;
+}
+
+.flashcard-actions .toggle-btn {
+    background-color: #6c757d;
+    color: white;
+}
+
+.flashcard-actions .toggle-btn:hover {
+    background-color: #5a6268;
+}
+
+.flashcard-actions input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-left: 10px;
+}
+
+/* grid_viewレイアウト時のチェックボックスサイズ調整 */
+.flashcards-container.grid-view-layout .flashcard-actions input[type="checkbox"] {
+    transform: scale(1.0); /* チェックボックスを小さく */
+    margin-left: 5px;
+}
+
+/* min-view-layout レイアウト時のチェックボックスサイズ調整 */
+.flashcards-container.min-view-layout .flashcard-actions input[type="checkbox"] {
+    transform: scale(0.8); /* さらにチェックボックスを小さく */
+    margin-left: 3px;
+}
+
+/* ダークモード時のチェックボックス */
+.dark-mode .flashcard-actions input[type="checkbox"] {
+    filter: invert(1) hue-rotate(180deg); /* チェックボックスの色を反転 */
+}
+
+/* モーダル共通スタイル */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 100; /* モーダルのz-indexを高く設定 */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+    padding-top: 60px;
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 5% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 700px;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+    position: relative;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease; /* ダークモードの切り替えを滑らかに */
+}
+
+/* ダークモード時のモーダル */
+.dark-mode .modal-content {
+    background-color: #3a3a3a;
+    border-color: #555;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.4);
+    color: #e0e0e0;
+}
+
+.close-button {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* ダークモード時のクローズボタン */
+.dark-mode .close-button {
+    color: #bbb;
+}
+
+.dark-mode .close-button:hover,
+.dark-mode .close-button:focus {
+    color: white;
+}
+
+.modal-content h2 {
+    text-align: center;
+    margin-top: 0;
+    color: #333;
+    transition: color 0.3s ease;
+}
+
+/* ダークモード時のモーダルh2 */
+.dark-mode .modal-content h2 {
+    color: #e0e0e0;
+}
+
+.modal-content p {
+    text-align: center;
+    color: #666;
+    margin-bottom: 20px;
+    transition: color 0.3s ease;
+}
+
+/* ダークモード時のモーダルp */
+.dark-mode .modal-content p {
+    color: #bbb;
+}
+
+
+/* 通常のカード追加モーダル内の入力スタイル */
+.qa-pair-input {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #eee;
+    padding: 10px;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+    align-items: center;
+    transition: background-color 0.3s ease, border-color 0.3s ease;
+}
+
+/* ダークモード時のqa-pair-input */
+.dark-mode .qa-pair-input {
+    background-color: #4a4a4a;
+    border-color: #666;
+}
+
+.modal-question-input,
+.modal-answer-input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    resize: none;
+    height: 38px;
+    line-height: 22px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* ダークモード時の入力欄 */
+.dark-mode .modal-question-input,
+.dark-mode .modal-answer-input {
+    background-color: #555;
+    border-color: #777;
+    color: #e0e0e0;
+}
+.dark-mode .modal-question-input::placeholder,
+.dark-mode .modal-answer-input::placeholder {
+    color: #bbb;
+}
+
+
+.remove-qa-pair-btn {
+    background-color: #dc3545;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background-color 0.3s ease;
+    flex-shrink: 0;
+}
+.remove-qa-pair-btn:hover {
+    background-color: #c82333;
+}
+
+
+#addQaPairBtn {
+    display: block;
+    width: fit-content;
+    margin: 20px auto 10px;
+    background-color: #17a2b8;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+}
+#addQaPairBtn:hover {
+    background-color: #138496;
+}
+
+#saveCardBtn {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    margin-top: 20px;
+}
+#saveCardBtn:hover {
+    background-color: #0056b3;
+}
+
+/* 一括追加/編集用テキストエリア */
+#bulkEditInput {
+    width: calc(100% - 20px);
+    height: 250px; /* 一括編集の入力欄の高さを大きく */
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+    resize: vertical;
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+/* ダークモード時のテキストエリア */
+.dark-mode #bulkEditInput {
+    background-color: #555;
+    border-color: #777;
+    color: #e0e0e0;
+}
+.dark-mode #bulkEditInput::placeholder {
+    color: #bbb;
+}
+
+
+#saveBulkEditBtn {
+    display: block;
+    width: 100%;
+    padding: 12px 20px;
+    background-color: #6c757d; /* 一括編集ボタンの色に合わせる */
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 18px;
+}
+
+#saveBulkEditBtn:hover {
+    background-color: #5a6268;
+}
+
+/* vocabularySwitcherModal 関連のスタイル */
+#vocabularyList {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    max-height: 300px; /* スクロール可能にする */
+    overflow-y: auto;
+    border: 1px solid #eee;
+    border-radius: 5px;
+    background-color: #fdfdfd;
+    padding: 10px;
+}
+
+.dark-mode #vocabularyList {
+    background-color: #4a4a4a;
+    border-color: #666;
+}
+
+.vocabulary-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #eee;
+    transition: background-color 0.2s ease;
+    /* 並べ替え可能にするための設定 */
+    cursor: grab; /* ドラッグ可能なカーソル */
+}
+
+.vocabulary-item:last-child {
+    border-bottom: none;
+}
+
+.dark-mode .vocabulary-item {
+    border-color: #666;
+}
+
+.vocabulary-item.active-vocabulary {
+    font-weight: bold;
+    color: #007bff;
+}
+
+.dark-mode .vocabulary-item.active-vocabulary {
+    color: #9bd0ff;
+}
+
+/* ドラッグ中のアイテムのスタイル */
+.vocabulary-item.dragging {
+    opacity: 0.5;
+    background-color: #e6e6e6; /* ドラッグ中の背景色 */
+    border: 1px dashed #999;
+}
+
+.dark-mode .vocabulary-item.dragging {
+    background-color: #555;
+}
+
+
+.vocabulary-name {
+    flex-grow: 1;
+    cursor: pointer;
+    padding: 5px;
+    border-radius: 3px;
+    transition: background-color 0.2s ease;
+    /* 名前変更インプットとの切り替えに対応 */
+    display: block; /* デフォルトでブロック要素 */
+    white-space: nowrap; /* テキストの折り返しを防ぐ */
+    overflow: hidden; /* はみ出したテキストを隠す */
+    text-overflow: ellipsis; /* はみ出したテキストを...で表示 */
+}
+
+.vocabulary-name:hover {
+    background-color: #f0f0f0;
+}
+
+.dark-mode .vocabulary-name:hover {
+    background-color: #555;
+}
+
+/* 名前変更入力フィールドのスタイル */
+.vocabulary-name-input {
+    flex-grow: 1;
+    padding: 5px;
+    border: 1px solid #ddd;
+    border-radius: 3px;
+    font-size: 1em;
+    box-sizing: border-box;
+    display: none; /* デフォルトで非表示 */
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode .vocabulary-name-input {
+    background-color: #555;
+    border-color: #777;
+    color: #e0e0e0;
+}
+
+/* 単語帳アイテム内のアクションボタンのコンテナ */
+.vocabulary-item-actions {
+    display: flex;
+    align-items: center;
+    gap: 5px; /* ボタン間のスペース */
+    margin-left: 10px; /* 名前とボタンの間にスペース */
+}
+
+.vocabulary-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+#newVocabularyName {
+    flex-grow: 1;
+    padding: 8px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+    background-color: #fff;
+    color: #333;
+    transition: background-color 0.3s ease, border-color 0.3s ease, color 0.3s ease;
+}
+
+.dark-mode #newVocabularyName {
+    background-color: #555;
+    border-color: #777;
+    color: #e0e0e0;
+}
+.dark-mode #newVocabularyName::placeholder {
+    color: #bbb;
+}
+
+#addVocabularyBtn {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 15px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s ease;
+}
+
+#addVocabularyBtn:hover {
+    background-color: #218838;
+}
+
+.delete-vocabulary-btn,
+.rename-vocabulary-btn,
+.save-rename-btn,
+.cancel-rename-btn {
+    background-color: #dc3545; /* デフォルト赤 */
+    color: white;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 0.8em;
+    transition: background-color 0.3s ease;
+}
+
+.delete-vocabulary-btn:hover {
+    background-color: #c82333;
+}
+
+.rename-vocabulary-btn {
+    background-color: #17a2b8; /* 青系 */
+}
+.rename-vocabulary-btn:hover {
+    background-color: #138496;
+}
+
+.save-rename-btn {
+    background-color: #28a745; /* 緑 */
+}
+.save-rename-btn:hover {
+    background-color: #218838;
+}
+
+.cancel-rename-btn {
+    background-color: #6c757d; /* グレー */
+}
+.cancel-rename-btn:hover {
+    background-color: #5a6268;
+}
+
+/* ドラッグハンドルアイコン */
+.drag-handle {
+    font-size: 1.2em; /* アイコンサイズ */
+    color: #888;
+    cursor: grab; /* ドラッグ可能なカーソル */
+    margin-right: 10px; /* 名前との間隔 */
+    padding: 5px; /* クリックしやすくする */
+}
+
+.dark-mode .drag-handle {
+    color: #bbb;
+}
+
+.drag-handle:active {
+    cursor: grabbing; /* ドラッグ中のカーソル */
+}
+
+/* QAセット数表示のスタイル */
+.qa-count {
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    background-color: rgba(0, 0, 0, 0.6);
+    color: white;
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 0.75em;
+    font-weight: bold;
+    z-index: 2; /* flashcardより高く、modalより低く設定 */
+    pointer-events: none; /* クリックイベントを透過させる */
+    transition: background-color 0.3s ease;
+}
+
+/* grid_viewレイアウト時のQAセット数表示位置調整 */
+.flashcards-container.grid-view-layout .qa-count {
+    top: 5px;
+    right: 5px;
+    padding: 2px 6px;
+    font-size: 0.6em;
+}
+
+/* min-view-layout レイアウト時のQAセット数表示位置調整 */
+.flashcards-container.min-view-layout .qa-count {
+    top: 3px;
+    right: 3px;
+    padding: 1px 4px;
+    font-size: 0.5em; /* さらに小さく */
+}
+
+/* ダークモード時のQAセット数表示 */
+.dark-mode .qa-count {
+    background-color: rgba(255, 255, 255, 0.2);
+    color: #e0e0e0;
+}
