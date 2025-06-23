@@ -46,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (Object.keys(allVocabularies).length === 0) {
         const defaultVocabId = 'default_vocabulary';
         allVocabularies[defaultVocabId] = {
-            name: 'デフォルト単語帳',
+            name: 'シンプル単語帳',
             flashcardsData: [],
             displayMode: 'all',
             isRandomized: false,
